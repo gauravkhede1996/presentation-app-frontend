@@ -15,7 +15,7 @@ const Screen= (props) => {
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
         ctxRef.current = ctx;
-    }, [elements]);
+    },[]);
 
     useLayoutEffect( ()=> {
         const canvas = document.getElementById('canvas');
@@ -23,11 +23,17 @@ const Screen= (props) => {
         canvas.width = window.innerWidth*2;
         const roughCanvas = rough.canvas(canvas);
         console.log("layout")
-        if( tool === 'pencil') {
         elements.forEach((element) => {
-            roughCanvas.linearPath(element.path)
+            if( element.type === 'pencil') {
+                roughCanvas.linearPath(element.path)
+            }
+            else if ( element.type === 'line') {
+                roughCanvas.draw(generator.line(element.offsetX, element.offsetY, element.width, element.height));
+            }
+            else if ( element.type === 'rectangle') {
+                roughCanvas.draw(generator.rectangle(element.offsetX, element.offsetY, element.width, element.height));
+            }
         })
-        }
     }, [elements])
 
     const handleMouseDown = (e) => {
@@ -42,6 +48,26 @@ const Screen= (props) => {
             stroke: 'black',
         }])
         }
+        else if (tool === 'line') {
+            setElements((prevElements) => [...prevElements, {
+                type: 'line',
+                offsetX,
+                offsetY,
+                width: offsetX,
+                height: offsetY,
+                stroke: 'black',
+            }])
+        }
+        else if ( tool === 'rectangle') {
+            setElements((prevElements) => [...prevElements, {
+                type: 'rectangle',
+                offsetX,
+                offsetY,
+                width: 0,
+                height: 0,
+                stroke: 'black',
+            }])
+        }
     }
     const handleMouseUp = () => {
         setDrawing(false);
@@ -49,15 +75,47 @@ const Screen= (props) => {
     const handleMouseMove = (e) => {
         if (!drawing) return;
         const { offsetX, offsetY} = e.nativeEvent;
-        const { path } = elements[elements.length-1];
-        const newPath = [...path, [offsetX,offsetY]];
         if ( tool === 'pencil') {
-        setElements((prevElements) => 
+            const { path } = elements[elements.length-1];
+            const newPath = [...path, [offsetX,offsetY]];
+            setElements((prevElements) => 
+                prevElements.map((ele, index) => {
+                    if( index === elements.length-1) {
+                        return {
+                            ...ele,
+                            path: newPath,
+                        }
+                    } else {
+                        return ele;
+                    }
+                })
+            )
+        }
+        else if( tool === 'line') {
+            setElements((prevElements) => 
             prevElements.map((ele, index) => {
                 if( index === elements.length-1) {
                     return {
                         ...ele,
-                        path: newPath,
+                        width:offsetX,
+                        height: offsetY,
+                    }
+                } else {
+                    return ele;
+                }
+            })
+        )
+        }
+        else if( tool === 'rectangle') {
+            setElements((prevElements) => 
+            prevElements.map((ele, index) => {
+                if( index === elements.length-1) {
+                    return {
+                        ...ele,
+                        offsetX: ele.offsetX,
+                        offsetY: ele.offsetY,
+                        width:offsetX - ele.offsetX,
+                        height: offsetY - ele.offsetY,
                     }
                 } else {
                     return ele;

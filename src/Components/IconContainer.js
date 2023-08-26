@@ -16,7 +16,7 @@ function IconContainer(props) {
                 <IconButton onClick={() => changeTool('pencil')}> <CreateTwoToneIcon /></IconButton>
                 <IconButton onClick={() => changeTool('rectangle')}> <CropSquareTwoToneIcon /></IconButton>
                 <IconButton onClick={() => changeTool('circle')}> <CircleTwoToneIcon /></IconButton>
-                <IconButton onClick={() => changeTool('arrow')}> <ArrowForwardTwoToneIcon /></IconButton>
+                <IconButton onClick={() => changeTool('line')}> <ArrowForwardTwoToneIcon /></IconButton>
             </div>
     );
 }
