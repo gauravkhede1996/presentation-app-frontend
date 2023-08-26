@@ -1,0 +1,106 @@
+.main-component{
+    border: 1px solid black;
+    width:90%;
+    min-height: 90vh;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height:90vh;
+}
+.Main-Screen {
+    /* border:1px solid pink; */
+    min-width: 90%;
+    max-width: 90%;
+    min-height: 40%;
+    height: 40%;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    overflow: hidden;
+}
+.Icon-Container{
+    height: 7%;
+    /* border: 1px solid burlywood; */
+    width:90%;
+    margin-top:1%;
+    padding: 7px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+.Comments-And-Users-Container {
+    height: 40%;
+    width:90%;
+    margin-top: 1%;
+    border: 1px solid cornsilk;
+    display: flex;
+}
+.Comments-Container {
+    flex:0.7;
+    /* border: 1px solid palevioletred; */
+    height:100%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    
+}
+.Comments-Container::-webkit-scrollbar {
+    display: none;
+}
+.Users-Container{
+    flex:0.3;
+    border: 1px solid hotpink;
+}
+.Comments-Input-Box{
+    display: flex;
+    align-items: flex-start;
+    height: 100%;
+    width: 100%;
+    
+}
+.Comments-Input-Box textarea {
+    box-sizing: border-box;
+}
+.Post-Button {
+    height:fit-content;
+    align-self: flex-start;
+    margin-top: 20px;
+}
+.Comment-Box {
+    height: 10vh;
+    /* border: 2px solid black; */
+    display: flex;
+}
+.User-Dp{
+    flex:0.3;
+    /* border:1px solid burlywood; */
+    height:90%;
+}
+.Comment-Content-Container {
+    flex:0.7;
+    /* border: 1px solid blanchedalmond; */
+    height:90%;
+    display: flex;
+    flex-direction: column;
+    
+}
+.User-Name {
+    font-weight: 700;
+    font-size: medium;
+}
+.Comment-Time{
+    font-weight: 100;
+    font-size: small;
+    color: grey;
+}
+.Login-Form {
+    display:flex;
+    flex-direction: column;
+    gap:15px;
+    margin-top: 20px;
+    /* align-items: center; */
+    /* justify-content: center; */
+    width: 40vw;
+    height:25vh;
+    border:1px solid black;
+    padding:8px;
+}
+/* canvas styling  */
