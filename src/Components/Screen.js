@@ -10,12 +10,19 @@ function createElement(x1,y1,x2,y2) {
 const Screen= (props) => {
     const canvasRef = useRef(null);
     const ctxRef = useRef(null);
-    const {elements, setElements, tool,setTool, drawing, setDrawing} = props;
+    const {elements, setElements, tool,setTool, drawing, setDrawing,color} = props;
     useEffect( ()=> {
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
         ctxRef.current = ctx;
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 2;
+        ctx.lineCap = 'round';
     },[]);
+
+    useEffect(()=> {
+        ctxRef.current.strokeStyle =color;
+    }, [color]);
 
     useLayoutEffect( ()=> {
         const canvas = document.getElementById('canvas');
@@ -25,13 +32,25 @@ const Screen= (props) => {
         console.log("layout")
         elements.forEach((element) => {
             if( element.type === 'pencil') {
-                roughCanvas.linearPath(element.path)
+                roughCanvas.linearPath(element.path,{
+                    stroke:element.stroke,
+                    strokeWidth:5,
+                    roughness:0,
+                })
             }
             else if ( element.type === 'line') {
-                roughCanvas.draw(generator.line(element.offsetX, element.offsetY, element.width, element.height));
+                roughCanvas.draw(generator.line(element.offsetX, element.offsetY, element.width, element.height,{
+                    stroke:element.stroke,
+                    strokeWidth:5,
+                    roughness:0,
+                }));
             }
             else if ( element.type === 'rectangle') {
-                roughCanvas.draw(generator.rectangle(element.offsetX, element.offsetY, element.width, element.height));
+                roughCanvas.draw(generator.rectangle(element.offsetX, element.offsetY, element.width, element.height,{
+                    stroke:element.stroke,
+                    strokeWidth:5,
+                    roughness:0,
+                }));
             }
         })
     }, [elements])
@@ -45,7 +64,7 @@ const Screen= (props) => {
             type: 'pencil',
             offsetX,
             offsetY,path: [[offsetX,offsetY]],
-            stroke: 'black',
+            stroke: color,
         }])
         }
         else if (tool === 'line') {
@@ -55,7 +74,7 @@ const Screen= (props) => {
                 offsetY,
                 width: offsetX,
                 height: offsetY,
-                stroke: 'black',
+                stroke: color,
             }])
         }
         else if ( tool === 'rectangle') {
@@ -65,7 +84,7 @@ const Screen= (props) => {
                 offsetY,
                 width: 0,
                 height: 0,
-                stroke: 'black',
+                stroke: color,
             }])
         }
     }
