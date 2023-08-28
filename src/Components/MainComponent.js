@@ -5,6 +5,7 @@ import './MainStyles.css'
 import React, { useState } from 'react';
 
 function MainComponent(props) {
+    const {roomData, socket} = props;
     const [elements, setElements ] = useState([]);
     const [tool, setTool] = useState('pencil');
     const [drawing,setDrawing] = useState(false);
@@ -13,8 +14,10 @@ function MainComponent(props) {
     return (
         <div className='main-component'>
                 Main Component
-                <Screen elements={elements} setElements={setElements} tool={tool} setTool={setTool} drawing={drawing} setDrawing={setDrawing} color={color} setColor={setColor}/>
+                <Screen elements={elements} setElements={setElements} tool={tool} setTool={setTool} drawing={drawing} setDrawing={setDrawing} color={color} setColor={setColor} roomData={roomData} socket={socket}/>
+                { roomData?.presenter && (
                 <IconContainer setTool={setTool} color={color} setColor={setColor} setElements={setElements} elements={elements} history={history} setHistory={setHistory}/>
+                )}
                 <CommentsAndUsersContainer />
             </div>
     );

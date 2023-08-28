@@ -8,6 +8,20 @@ function createElement(x1,y1,x2,y2) {
     return { x1, y1,x2, y2, roughElement};
 }
 const Screen= (props) => {
+    const {roomData, socket} =props;
+    const [imgCanvas,setImgCanvas] = useState('');
+    useEffect(() => {
+        socket.on("whiteBoardDataResponse", (data) => {
+            setImgCanvas(data.imgUrl);
+        })
+    })
+    if( !roomData?.presenter ) {
+        return (
+            <div className='Main-Screen'>
+               <img src={imgCanvas} alt="Real Time white board Image present by presenter"></img>
+            </div>
+        );
+    }
     const canvasRef = useRef(null);
     const ctxRef = useRef(null);
     const {elements, setElements, tool,setTool, drawing, setDrawing,color} = props;
@@ -53,6 +67,8 @@ const Screen= (props) => {
                 }));
             }
         })
+        const  canvasImage = canvas.toDataURL();
+        socket.emit("whiteBoardData", canvasImage);
     }, [elements])
 
     const handleMouseDown = (e) => {

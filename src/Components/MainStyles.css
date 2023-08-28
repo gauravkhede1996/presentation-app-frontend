@@ -98,13 +98,18 @@
     margin-top: 20px;
     /* align-items: center; */
     /* justify-content: center; */
-    width: 40vw;
+    width: 30vw;
     height:25vh;
     border:1px solid black;
     padding:8px;
+    margin-right: 10vw;
 }
 /* canvas styling  */
 #color ,#clearCanvasButton, #undoButton, #redoButton{
     margin-right:2rem;
+}
+.createJoinRoomContainer {
+    display: flex;
+    justify-content: space-between;
 }
 
